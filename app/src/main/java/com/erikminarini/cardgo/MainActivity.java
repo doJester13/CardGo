@@ -1,5 +1,7 @@
 package com.erikminarini.cardgo;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +12,16 @@ import android.widget.Button;
 
 import com.loopj.android.http.*;
 
+import java.io.IOException;
+
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
     AsyncHttpClient client = new AsyncHttpClient();
     String TRIGGER = "http://10.5.5.9/gp/gpControl/command/shutter?p=1";
-    String STOP = " http://10.5.5.9/gp/gpControl/command/shutter?p=0";
+    String STOP = "http://10.5.5.9/gp/gpControl/command/shutter?p=0";
+    String START = "http://10.5.5.9/gp/gpControl/execute?p1=gpStream&c1=restart";
+    String VIDEO = "rtp://10.5.5.9:8554 ";
 
     Button trig;
     Button stop;
@@ -25,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final MediaPlayer mediaPlayer = new MediaPlayer();
+
         trig = (Button) findViewById(R.id.button);
         trig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request(TRIGGER);
+                request(START);
             }
         });
 
@@ -37,7 +45,11 @@ public class MainActivity extends AppCompatActivity {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request(STOP);
+                try {
+                    startVideo(mediaPlayer, VIDEO);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -94,5 +106,12 @@ public class MainActivity extends AppCompatActivity {
                 // called when request is retried
             }
         });
+    }
+
+    public void startVideo(MediaPlayer mediaPlayer, String url) throws IOException {
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer.setDataSource(url);
+        mediaPlayer.prepare(); // might take long! (for buffering, etc)
+        mediaPlayer.start();
     }
 }
