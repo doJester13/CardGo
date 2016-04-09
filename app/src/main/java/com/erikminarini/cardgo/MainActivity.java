@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button trig;
     Button stop;
+    Button go;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         //final MediaPlayer mediaPlayer = new MediaPlayer();
 
-        trig = (Button) findViewById(R.id.button);
+        trig = (Button) findViewById(R.id.button2);
         trig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,8 +92,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        stop = (Button) findViewById(R.id.button2);
+        stop = (Button) findViewById(R.id.button);
         stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                request(START);
+
+            }
+        });
+
+        go = (Button) findViewById(R.id.button3);
+        go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /*try {

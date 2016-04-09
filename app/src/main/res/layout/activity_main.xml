@@ -15,7 +15,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trigger"
+        android:text="stop"
         android:id="@+id/button"
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
@@ -25,10 +25,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="STOP"
+        android:text="video"
         android:id="@+id/button2"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/surface_view"
         android:layout_alignEnd="@+id/surface_view" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="start"
+        android:id="@+id/button3"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/button"
+        android:layout_toEndOf="@+id/button" />
 
 </RelativeLayout>
